@@ -39,7 +39,7 @@
         // the response is passed to the function
         success: function( msg ) {
           localStorage.clear();
-          window.location.reload("{{URL::to('/')}}");
+          window.location = "{{URL::to('/')}}";
         }
       });
     return false;

@@ -4,7 +4,10 @@ use Illuminate\Routing\Controller as BaseController;
 use App\Models\UserModel;
 use App\Models\UserSessionModel;
 use App\Models\CarsTypeModel;
+use App\Models\CarsModel;
+use App\Models\UserCarsModel;
 use Illuminate\Http\Request;
+use Webpatser\Uuid\Uuid;
 use Hash;
 use Auth;
 
@@ -64,25 +67,29 @@ class UserController extends BaseController
 		$email = $request->input('email');
 		$password = $request->input('password');
 		$name = $request->input('name');
+		$lastname = $request->input('lastname');
 
 		/*if(empty($username))
 			return response()->json(array('status' => 'error', 'type' => 'empty username'));*/
-		if(empty($email))
-			return response()->json(array('status' => 'error', 'type' => 'empty email'));
-		if(empty($password) || strlen($password) < 6)
-			return response()->json(array('status' => 'error', 'type' => 'password too short'));
 		if(empty($name))
 			return response()->json(array('status' => 'error', 'type' => 'empty name'));
+		if(empty($lastname))
+			return response()->json(array('status' => 'error', 'type' => 'empty last name'));
+		if(empty($password) || strlen($password) < 6)
+			return response()->json(array('status' => 'error', 'type' => 'password too short'));
+		if(empty($email))
+			return response()->json(array('status' => 'error', 'type' => 'empty email'));
+
 
 		$email_exist = UserModel::where('email', $email)->first();
 		if($email_exist)
       return response()->json(array('status' => 'error', 'type' => 'email exist'));
 
 		$new_user = new UserModel();
-		//$new_user->username = $username;
 		$new_user->email = $email;
 		$new_user->password = Hash::make($password);
 		$new_user->name = $name;
+		$new_user->lastname = $lastname;
 		$new_user->save();
 
 		if(!$new_user)
@@ -169,25 +176,20 @@ class UserController extends BaseController
 		return response()->json(array('status' => 'success', 'user_editing' => $user, 'car_types' => $car_types));
 	}
 
-	//************************* SAVE USER CHANGES FUNCTION - USER CONTROLLER *********************
+	//************************* SAVE USER CHANGES FUNCTION - USER CONTROLLER *********************//
 	public function save(Request $request)
 	{
 		//Inputs Required
-		$user_id        = $request->input('user_id');
-		$session_id     = $request->input('session_id');
-		$session_token  = $request->input('session_token');
-		$name           = $request->input('name');
-		$birthdate      = $request->input('birthdate');
-		$phone          = $request->input('phone');
-		$address        = $request->input('address');
-		$email          = $request->input('email');
-		$type           = $request->input('type');
-		$is_new         = $request->input('is_new');
-		$username       = $request->input('username');
-		$password       = $request->input('password');
+		$user_id = $request->input('user_id');
+		$session_id = $request->input('session_id');
+		$session_token = $request->input('session_token');
+		$name = $request->input('name');
+		$lastname = $request->input('lastname');
+		$email = $request->input('email');
+		$phone = $request->input('phone');
 
 		//Data validations
-		if(empty($user_id) && !$is_new)
+		if(empty($user_id))
 		return response()->json(array('status' => 'error', 'type' => 'Falta id de usuario'));
 
 		if(empty($session_id))
@@ -197,64 +199,36 @@ class UserController extends BaseController
 		return response()->json(array('status' => 'error', 'type' => 'credenciales'));
 
 		if(empty($name))
-		return response()->json(array('status' => 'error', 'type' => 'Falta el nombre'));
+		return response()->json(array('status' => 'error', 'type' => 'Empty name'));
 
-		if(empty($birthdate))
-		return response()->json(array('status' => 'error', 'type' => 'Falta Fecha de Nacimiento'));
+		if(empty($lastname))
+		return response()->json(array('status' => 'error', 'type' => 'Empty last name'));
 
-		if(empty($phone))
-		return response()->json(array('status' => 'error', 'type' => 'Falta Telefono'));
-
-		if(empty($address))
-		return response()->json(array('status' => 'error', 'type' => 'Falta Direccion'));
+		/*if(empty($phone))
+		return response()->json(array('status' => 'error', 'type' => 'Empty phone'));*/
 
 		if(empty($email))
-		return response()->json(array('status' => 'error', 'type' => 'Falta Email'));
-
-		if(empty($username))
-		return response()->json(array('status' => 'error', 'type' => 'Falta nombre de usuario'));
-
-		if(empty($type) && Auth::user()->type == 1)
-		return response()->json(array('status' => 'error', 'type' => 'Falta Tipo de Usuario'));
-
-		if(empty($password) && $is_new)
-		return response()->json(array('status' => 'error', 'type' => 'Falta password'));
+		return response()->json(array('status' => 'error', 'type' => 'Empty email'));
 
 		$email_exist = UserModel::where('email', $email)->first();
-		$username_exist = UserModel::where('username', $username)->first();
 
 		$user_logged = UserSessionModel::where('id', $session_id)->where('session_token', $session_token)->first();
 		if(!$user_logged)
 		return response()->json(array('status' => 'error', 'type' => 'User not logged'));
 
-		if(!$is_new)
-		{
-			$user_to_be_edited = UserModel::where('id', $user_id)->first();
-			if(!$user_to_be_edited)
-			return response()->json(array('status' => 'error', 'type' => 'User doesn\'t exist'));
-		}else
-		{
-			$user_to_be_edited = new UserModel();
-			$user_to_be_edited->password = Hash::make($password);
-		}
+		$user_to_be_edited = UserModel::where('id', $user_id)->first();
+		if(!$user_to_be_edited)
+		return response()->json(array('status' => 'error', 'type' => 'User doesn\'t exist'));
+
 
 		if($email_exist && $email != $user_to_be_edited->email)
-		return response()->json(array('status' => 'error', 'type' => 'El email ya existe'));
-
-		if($username_exist && $username != $user_to_be_edited->username)
-		return response()->json(array('status' => 'error', 'type' => 'El nombre de usuario ya existe'));
-
+		return response()->json(array('status' => 'error', 'type' => 'email exist'));
 
 		//Saving new data
 		$user_to_be_edited->name      = trim($name, " ");
-		$user_to_be_edited->birthdate = $birthdate;
+		$user_to_be_edited->lastname = $lastname;
 		$user_to_be_edited->phone     = trim($phone, " ");
-		$user_to_be_edited->address   = trim($address, " ");
 		$user_to_be_edited->email     = trim($email, " ");
-		$user_to_be_edited->username  = trim($username, " ");
-
-		if(Auth::user()->type == 1)  //If the logged user it's an admin then you can custom the type of user logged
-		$user_to_be_edited->type    = $type;
 
 		$user_to_be_edited->save();
 

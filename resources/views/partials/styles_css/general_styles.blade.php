@@ -37,6 +37,36 @@
     min-width: 80px;
 	}
 
+	.error-messages {
+		text-align: right;
+		color: red;
+		font-weight: bold;
+	}
+
+	.buttons-forms {
+		background-color: rgb(30, 136, 229);
+	}
+
+	.buttons-forms:hover {
+		background-color: rgba(30, 136, 229, 0.8);
+	}
+
+	.buttons-forms:focus {
+		background-color: rgb(24, 121, 205);
+	}
+
+	.buttons-cancel {
+		background-color: rgb(255, 51, 51);
+	}
+
+	.buttons-cancel:hover {
+		background-color: rgba(255, 51, 51, 0.8);
+	}
+
+	.buttons-cancel:focus {
+		background-color: rgb(255, 77, 77);
+	}
+
 	.panel-center {
 		margin-top: 30%;
 		padding: 1% 2% 1% 2%;
@@ -92,5 +122,9 @@
 		font-size: 2em;
 		font-weight: bold;
 		text-align: center;
+	}
+
+	.cars-modal {
+		width: 30%;
 	}
 </style>

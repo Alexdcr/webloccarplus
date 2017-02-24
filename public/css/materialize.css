@@ -4720,14 +4720,14 @@ small {
 }
 
 .card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating) {
-    color: #ffab40;
+    color: rgba(0, 128, 255, 0.7);
     margin-right: 24px;
     transition: color .3s ease;
     text-transform: uppercase;
 }
 
 .card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating):hover {
-    color: #ffd8a6;
+    color: rgb(0, 128, 255);
 }
 
 .card .card-reveal {

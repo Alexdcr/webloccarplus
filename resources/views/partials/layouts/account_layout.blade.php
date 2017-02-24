@@ -7,11 +7,11 @@
     <body>
       @include("partials.menu")
 			<div class="row">
-				@include("partials.panel")
+				@include("partials.account_panel")
 	      @yield("content")
 			</div>
 
       @include("partials.scripts.general_scripts")
-			@include("partials.ajax.logout_ajax")
+			@include("partials.ajax.account_ajax")
     </body>
 </html>

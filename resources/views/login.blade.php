@@ -12,7 +12,7 @@
           <a href="{{URL::to('/')}}" class="center" style="font-size: 2.5em;">Location Car</a>
         </div>
       </div>
-      <div class="row">
+      <div class="row margin">
         <div class="input-field col s12">
           <i class="material-icons prefix">perm_identity</i>
           <input class="validate" id="account" name="account" type="text">
@@ -20,7 +20,7 @@
         </div>
 				<div id="email_message_div" class="col s12 error-messages"></div>
       </div>
-      <div class="row">
+      <div class="row margin">
         <div class="input-field col s12">
           <i class="material-icons prefix">lock_outline</i>
           <input id="password" name="password" type="password" min="6">

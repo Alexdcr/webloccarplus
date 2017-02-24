@@ -9,9 +9,11 @@
     var types = JSON.parse(localStorage.getItem("types"));
 
 		/*Assing data to form inputs*/
+		$("#user_id_edit").attr("value", user_id_sess)
 		$("#session_id_edit").attr("value", id_session);
-		$("#token_session_edit").attr("value", token_session);
+		$("#session_token_edit").attr("value", token_session);
 		$("#name_edit").attr("value", user.name);
+		$("#lastname_edit").attr("value", user.lastname);
 		$("#email_edit").attr("value", user.email);
 		$("#phone_edit").attr("value", user.phone);
 
@@ -38,13 +40,51 @@
             Materialize.toast($toastContent, 2000, 'rounded red darken-3');
           }else if(msg.status == 'success'){
             var $toastContent = $('<span>Changes Saved Succesfully</span>');
-            Materialize.toast($toastContent, 1000, 'rounded light-green accent-3 black-text', function(){location.reload()});
+            Materialize.toast($toastContent, 100000, 'rounded blue lighten-1 black-text', function(){window.location="{{URL::to('/')}}"});
           }
         }
       });
       return false;
     });
 
-		
+		/*Close session - function logout*/
+    $('#to_logout').on('click', function(){
+      //declare the url to post. same as in form action.
+      var url  = "{{URL::to('/user/logout')}}";
+      var session_info = {session_id: id_session,
+                          session_token: token_session
+                          };
+      // Start $.ajax() method
+      $.ajax({
+        // The URL for the request. variable set above
+        url: url,
+        // The data to send (will be converted to a query string). variable set above
+        data: session_info,
+				headers: {
+			    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			  },
+        // Whether this is a POST or GET request
+        type: "POST",
+        // The type of data we expect back. can be json, html, text, etc...
+        dataType : "json",
+        // Code to run if the request succeeds;
+        // the response is passed to the function
+        success: function( msg ) {
+          localStorage.clear();
+          window.location = "{{URL::to('/')}}";
+        }
+      });
+    	return false;
+    });
+
+		//Method for cancel user edid
+		$("#to_cancel_edit").on('click', function() {
+      window.location = "{{URL::to('/')}}";
+    });
+
+		/*Web elements declarations*/
+		$('select').material_select();//For initialize all Select's
+
+		$('.modal').modal();//For initialize alls Modals
 	});
 </script>

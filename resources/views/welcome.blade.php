@@ -30,7 +30,7 @@
 						<div class="row center-messages">
 					    <div class="center-cards">
 					      <div class="card-panel card-desing z-depth-2">
-					        You must <a href="{{URL::to('view/register') }}"><strong>register</strong></a> a new car in your account to perform a simulation.
+					        You must <a href="{{URL::to('view/cars') }}"><strong>register</strong></a> a new car in your account to perform a simulation.
 					      </div>
 					    </div>
 					  </div>

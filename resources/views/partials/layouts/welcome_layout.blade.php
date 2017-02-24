@@ -7,7 +7,7 @@
     <body>
       @include("partials.menu")
 			<div class="row">
-				@include("partials.panel")
+				@include("partials.simulation_panel")
 	      @yield("content")
 			</div>
 

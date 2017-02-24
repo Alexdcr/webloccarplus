@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'SiteController@welcome');
+Route::get('/', 'SiteController@welcome');//Route for Welcome View
 
 //************************* ROUTES FOR VIEWS *******************************
 Route::group(['prefix' => 'view'], function() {
@@ -20,7 +20,8 @@ Route::group(['prefix' => 'view'], function() {
     Route::get('forgot', 'SiteController@forgot');
     Route::get('map','SiteController@map');
 		Route::get('account','SiteController@account');
-		Route::get('cars','SiteController@new_cars');
+		Route::get('cars','SiteController@vehicles');
+		Route::get('test', 'SiteController@test');
 });
 
 //************************* ROUTES FOR WEB USER CONTROLLER *********************
@@ -33,5 +34,14 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('save', 'UserController@save');
     Route::post('delete', 'UserController@delete');
     Route::post('logout', 'UserController@logout');
-		Route::post('test', 'UserController@test');
+		/*Route::post('add_cars', 'UserController@add_car');
+		Route::post('delete_cars', 'UserController@delete_car');*/
+});
+
+//************************* ROUTES FOR WEB USER CARS CONTROLLER *********************
+Route::group(['prefix' => 'cars'], function () {
+		Route::post('add', 'CarsController@add');
+		Route::post('edit', 'CarsController@edit');
+		Route::post('save', 'CarsController@save');
+		Route::post('delete', 'CarsController@delete');
 });

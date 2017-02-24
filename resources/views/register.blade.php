@@ -12,22 +12,23 @@
           <a href="{{URL::to('/')}}" class="center" style="font-size: 2.5em;">Location Car</a>
         </div>
       </div>
-			<div class="row">
+			<div class="row margin">
         <div class="input-field col s12">
-          <i class="material-icons prefix">perm_identity</i>
+          <i class="material-icons prefix">person_outline</i>
           <input id="name" name="name" type="text" class="validate">
           <label for="name" class="center-align">Name</label>
         </div>
 				<div id="name_message_div" class="col s12 error-messages"></div>
       </div>
-      <!--<div class="row margin">
+      <div class="row margin">
         <div class="input-field col s12">
-          <i class="material-icons prefix">perm_identity</i>
-          <input id="username" name="username" type="text" class="validate">
-          <label for="username" class="center-align">Username</label>
+          <i class="material-icons prefix">person</i>
+          <input id="lastname" name="lastname" type="text" class="validate">
+          <label for="lastname" class="center-align">Last Name</label>
         </div>
-      </div>-->
-      <div class="row">
+				<div id="lastname_message_div" class="col s12 error-messages"></div>
+      </div>
+      <div class="row margin">
         <div class="input-field col s12">
           <i class="material-icons prefix">email</i>
           <input id="email" name="email" type="email" class="validate">
@@ -35,7 +36,7 @@
         </div>
 				<div id="email_message_div" class="col s12 error-messages"></div>
       </div>
-      <div class="row">
+      <div class="row margin">
         <div class="input-field col s12">
           <i class="material-icons prefix">lock_outline</i>
           <input id="password" name="password" type="password" class="validate" min="6">

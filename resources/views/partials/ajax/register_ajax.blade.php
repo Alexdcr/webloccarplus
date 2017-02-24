@@ -1,11 +1,16 @@
 <script type="text/javascript">
   $(document).ready(function(){
 		$('#name_message_div').hide();
+		$('#lastname_message_div').hide();
 		$('#email_message_div').hide();
 		$('#pass_message_div').hide();
 
 		$('#name').on('click', function(){
 			$('#name').removeClass("invalid");
+		});
+
+		$('#lastname').on('click', function(){
+			$('#lastname').removeClass("invalid");
 		});
 
 		$('#email').on('click', function(){
@@ -18,9 +23,11 @@
 
     $("#register_form").submit(function(){
 			$('#name_message_div').hide();
+			$('#lastname_message_div').hide();
 			$('#email_message_div').hide();
 			$('#pass_message_div').hide();
 			$('#name_message_div').empty();
+			$('#lastname_message_div').empty();
 			$('#email_message_div').empty();
 			$('#pass_message_div').empty();
       // Start $.ajax() method
@@ -50,6 +57,11 @@
 							$('#name_message_div').append($msgContent);
 							$("#name_message_div").show();
 							$('#name').addClass("invalid");
+						} else if(msg.type === 'empty last name'){
+							var $msgContent = '<span>Empty last name, this field is required.</span>';
+							$('#lastname_message_div').append($msgContent);
+							$("#lastname_message_div").show();
+							$('#lastname').addClass("invalid");
 						} else if(msg.type === 'password too short'){
 							var $msgContent = '<span>Password too short, 6 characters is the minimum.</span>';
 							$('#pass_message_div').append($msgContent);
